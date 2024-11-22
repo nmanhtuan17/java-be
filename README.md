@@ -2,25 +2,6 @@
 
 ## Hướng dẫn sử dụng
 
-1. clone dự án từ github về
-
-    ```cmd
-      git clone https://github.com/NQTrung08/Student-Management-Server.git
-    ```
-
-2. tải các package về cho dự án
-
-    ```cmd
-      npm install
-    ```
-## Sử dụng api online
-
-```cmd
-    https://student-management-server-poti.onrender.com/api/auth/login
-    msv: a41954
-    password: a41954
-```
-
 ## Api
 
 1. login

@@ -53,7 +53,7 @@ const { asyncHandler } = require('../Utils/asyncHandler')
  *         description: Unauthorized
  */
 router.post('/login', asyncHandler(AuthController.login))
-
+router.post('/signup', asyncHandler(AuthController.signup))
 /**
  * @swagger
  * /auth/refresh:
