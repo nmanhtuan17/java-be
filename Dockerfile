@@ -1,6 +1,6 @@
-FROM --platform=linux/amd64 node:18
+FROM node:latest 
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
@@ -11,9 +11,6 @@ RUN rm -rf package-lock.json
 
 # Cài đặt dependencies
 RUN npm install
-# Rebuild bcrypt
-RUN npm uninstall bcrypt
-RUN npm install bcrypt
 
 # Copy source code
 COPY . .
