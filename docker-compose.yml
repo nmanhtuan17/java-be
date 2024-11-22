@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app:
+    platform: linux/amd64
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=pro
+      - PORT=8080
+      - MONGO_URL_ONLINE=mongodb+srv://theanh:theanh3012@theanh.of7iq.mongodb.net/std_manager?retryWrites=true&w=majority
+      - SECRET_KEY_JWT=std-manager
+      - JWT_ACCESS_KEY=std-manager-accessToken
+      - JWT_REFRESH_KEY=std-manager-refreshToken
+      - URL_APP=https://student-management-server-poti.onrender.com

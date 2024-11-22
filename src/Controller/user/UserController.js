@@ -124,8 +124,6 @@ module.exports = {
         fullname: 'admin'
         // Các trường khác có thể được thêm vào nếu cần
       });
-
-      console.log(newAdmin);
       const { password, ...rest } = newAdmin._doc
       // Trả về msv và password trong phản hồi
       res.status(200).json({
@@ -225,17 +223,24 @@ module.exports = {
     }
 
     // Cập nhật thông tin sinh viên
-    oldStudent.gvcn = data.gvcn;
-    oldStudent.majorId = data.majorId;
+    // oldStudent.gvcn = data.gvcn;
+    // oldStudent.majorId = data.majorId;
+    await oldStudent.updateOne({
+      ...data
+    }, {
+      new: true
+    })
 
     // Cập nhật danh sách sinh viên trong các bảng liên quan sau khi lưu
-    await oldStudent.save();
+    // await oldStudent.save();
 
     // Lấy thông tin sinh viên đã cập nhật với các trường populate
+    // const updated = await User.findByIdAndUpdate(id, data, {
+    //   new: true
+    // })
     const student = await User.findById(id)
       .populate('majorId')
       .populate('gvcn');
-
     // Trả về thông tin sinh viên đã cập nhật
     const { password, ...rest } = student._doc;
     res.status(200).json({ message: 'Update success', data: rest });
@@ -258,7 +263,7 @@ module.exports = {
 
   searchStudents: async (req, res) => {
     let { keyword } = req.query;
-    
+
     // Bỏ khoảng trắng ở đầu và cuối từ khóa
     keyword = keyword.trim();
 
@@ -284,8 +289,8 @@ module.exports = {
       deleted: false,
       isAdmin: false,
     }).populate({
-        path: 'majorId',
-        select: 'name'
+      path: 'majorId',
+      select: 'name'
     }).collation({ locale: 'vi', strength: 1 });
 
     console.log("student by key: ", studentsByKeyword);
@@ -297,8 +302,8 @@ module.exports = {
       deleted: false,
       isAdmin: false,
     }).populate({
-        path: 'majorId',
-        select: 'name'
+      path: 'majorId',
+      select: 'name'
     }).collation({ locale: 'vi', strength: 1 });
 
     console.log(studentsByMajor);
@@ -307,7 +312,7 @@ module.exports = {
     const students = [...studentsByKeyword, ...studentsByMajor];
 
     // Loại bỏ các sinh viên trùng lặp
-    const uniqueStudents = students.filter((student, index, self) => 
+    const uniqueStudents = students.filter((student, index, self) =>
       index === self.findIndex((s) => s._id.toString() === student._id.toString())
     );
 
